@@ -1,0 +1,11 @@
+name: LoveQuests
+author: Halflove
+version: 1.0
+main: me.Halflove.Quests.Main.Main
+softdepend: [WorldGuard, HolographicDisplays, WGRegionEvents, Vault, Towny]
+api-version: 1.16
+commands:
+  quests:
+    aliases: [quest, q]
+    usage: </Command>
+    description: Internal.
