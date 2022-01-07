@@ -22,17 +22,6 @@ public class Main extends JavaPlugin {
     public static Plugin plugin;
 
     public void onEnable() {
-        /*Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, new Runnable() {
-            public void run() {
-                for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                    if (QGui.guiOpened.get(player)!=null) {
-                        QGui.setGui(player);
-                        player.updateInventory();
-                        Bukkit.broadcastMessage("test");
-                    }
-                }
-            }
-        }, 1L, 100L);*/
         plugin = (Plugin)this;
         getLogger().info("Version " + getDescription().getVersion() + " has been enabled.");
         this.settings.setup((Plugin)this);
@@ -52,7 +41,7 @@ public class Main extends JavaPlugin {
     }
 
     public void registerCommands() {
-        getCommand("quests").setExecutor((CommandExecutor)new QCommands());
+        getCommand("tasks").setExecutor((CommandExecutor)new QCommands());
     }
 
     private boolean setupEconomy() {

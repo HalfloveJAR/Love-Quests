@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class QCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("quests"))
+        if (cmd.getName().equalsIgnoreCase("tasks"))
             if (sender.hasPermission("quests.admin")) {
                 if (args.length == 0) {
                     QGui.openGui((Player)sender);
