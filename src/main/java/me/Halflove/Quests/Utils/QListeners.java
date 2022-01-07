@@ -29,7 +29,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class QListeners implements Listener {
     @EventHandler
-    public void onPlace(BlockPlaceEvent event){
+    public void onPlace(BlockPlaceEvent event) {
         Block block = event.getBlock();
         block.setMetadata("placed", new FixedMetadataValue(Main.plugin, "true"));
     }
@@ -43,8 +43,8 @@ public class QListeners implements Listener {
                 event.getBlock().removeMetadata("placed", Main.plugin);
             } else if (QManager.hasQuest(player) && QManager.getObjectiveType(quest).equals("mine") &&
                     event.getBlock().getType().equals(Material.valueOf(QManager.getMaterial(QManager.getQuestId(player)).toString()))) {
-                int current = SettingsManager.getData().getInt(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount");
-                SettingsManager.getData().set(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount", Integer.valueOf(current + 1));
+                int current = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".selected-quest.amount");
+                SettingsManager.getData().set(player.getUniqueId().toString() + ".selected-quest.amount", Integer.valueOf(current + 1));
                 SettingsManager.saveData();
                 QManager.testComplete(player, quest);
             }
@@ -63,8 +63,8 @@ public class QListeners implements Listener {
                     if (bdata instanceof Ageable) {
                         Ageable age = (Ageable) bdata;
                         if (age.getAge() == age.getMaximumAge()) {
-                            int current = SettingsManager.getData().getInt(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount");
-                            SettingsManager.getData().set(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount", Integer.valueOf(current + 1));
+                            int current = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".selected-quest.amount");
+                            SettingsManager.getData().set(player.getUniqueId().toString() + ".selected-quest.amount", Integer.valueOf(current + 1));
                             SettingsManager.saveData();
                             QManager.testComplete(player, quest);
                         }
@@ -87,12 +87,12 @@ public class QListeners implements Listener {
         }
 
         final String state = event.getState().name();
-        if (event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)){
+        if (event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) {
             Item fish = (Item) event.getCaught();
             ItemStack fishStack = fish.getItemStack();
             if (state.equalsIgnoreCase("CAUGHT_FISH") && QManager.getObjectiveType(quest).equals("fish") && fishStack.getType().equals(Material.valueOf(QManager.getType(QManager.getQuestId(player)).toUpperCase()))) {
-                int current = SettingsManager.getData().getInt(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount");
-                SettingsManager.getData().set(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount", Integer.valueOf(current + 1));
+                int current = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".selected-quest.amount");
+                SettingsManager.getData().set(player.getUniqueId().toString() + ".selected-quest.amount", Integer.valueOf(current + 1));
                 SettingsManager.saveData();
                 QManager.testComplete(player, quest);
             }
@@ -114,8 +114,8 @@ public class QListeners implements Listener {
             }
             if (QManager.hasQuest(player) && QManager.getObjectiveType(quest).equals("kill") &&
                     event.getEntityType().toString().equals(QManager.getType(QManager.getQuestId(player)).toUpperCase())) {
-                int current = SettingsManager.getData().getInt(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount");
-                SettingsManager.getData().set(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount", Integer.valueOf(current + 1));
+                int current = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".selected-quest.amount");
+                SettingsManager.getData().set(player.getUniqueId().toString() + ".selected-quest.amount", Integer.valueOf(current + 1));
                 SettingsManager.saveData();
                 QManager.testComplete(player, quest);
             }
@@ -139,7 +139,7 @@ public class QListeners implements Listener {
                 if (event.isShiftClick()) {
                     ItemStack wool = new ItemStack(Material.LEGACY_WOOL, 1, (short) 0);
                     if (event.getCurrentItem().equals(wool)) {
-                        int current = SettingsManager.getData().getInt(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount");
+                        int current = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".selected-quest.amount");
                         int itemsChecked = 0;
                         int possibleCreations = 1;
                         byte b;
@@ -148,7 +148,7 @@ public class QListeners implements Listener {
                         for (i = (arrayOfItemStack = event.getInventory().getMatrix()).length, b = 0; b < i; ) {
                             ItemStack item = arrayOfItemStack[b];
                             if (item != null && !item.getType().equals(Material.AIR)) {
-                                System.out.println(item.toString());
+                                System.out.println(item);
                                 if (itemsChecked == 0) {
                                     possibleCreations = item.getAmount();
                                 } else {
@@ -159,21 +159,21 @@ public class QListeners implements Listener {
                             b++;
                         }
                         int amountOfItems = event.getRecipe().getResult().getAmount() * possibleCreations;
-                        SettingsManager.getData().set(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount", Integer.valueOf(current + amountOfItems));
+                        SettingsManager.getData().set(player.getUniqueId().toString() + ".selected-quest.amount", Integer.valueOf(current + amountOfItems));
                         SettingsManager.saveData();
                         QManager.testComplete(player, quest);
                     }
                 } else if (event.getCursor().getType() == null || event.getCursor().getType().equals(Material.AIR)) {
-                    int current = SettingsManager.getData().getInt(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount");
+                    int current = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".selected-quest.amount");
                     int amount = event.getCurrentItem().getAmount();
-                    SettingsManager.getData().set(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount", Integer.valueOf(current + amount));
+                    SettingsManager.getData().set(player.getUniqueId().toString() + ".selected-quest.amount", Integer.valueOf(current + amount));
                     SettingsManager.saveData();
                     QManager.testComplete(player, quest);
                 } else {
                     event.setCancelled(true);
                 }
             } else if (event.isShiftClick()) {
-                int current = SettingsManager.getData().getInt(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount");
+                int current = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".selected-quest.amount");
                 int itemsChecked = 0;
                 int possibleCreations = 1;
                 byte b;
@@ -182,7 +182,7 @@ public class QListeners implements Listener {
                 for (i = (arrayOfItemStack = event.getInventory().getMatrix()).length, b = 0; b < i; ) {
                     ItemStack item = arrayOfItemStack[b];
                     if (item != null && !item.getType().equals(Material.AIR)) {
-                        System.out.println(item.toString());
+                        System.out.println(item);
                         if (itemsChecked == 0) {
                             possibleCreations = item.getAmount();
                         } else {
@@ -193,13 +193,13 @@ public class QListeners implements Listener {
                     b++;
                 }
                 int amountOfItems = event.getRecipe().getResult().getAmount() * possibleCreations;
-                SettingsManager.getData().set(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount", Integer.valueOf(current + amountOfItems));
+                SettingsManager.getData().set(player.getUniqueId().toString() + ".selected-quest.amount", Integer.valueOf(current + amountOfItems));
                 SettingsManager.saveData();
                 QManager.testComplete(player, quest);
             } else if (event.getCursor().getType() == null || event.getCursor().getType().equals(Material.AIR)) {
-                int current = SettingsManager.getData().getInt(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount");
+                int current = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".selected-quest.amount");
                 int amount = event.getCurrentItem().getAmount();
-                SettingsManager.getData().set(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount", Integer.valueOf(current + amount));
+                SettingsManager.getData().set(player.getUniqueId().toString() + ".selected-quest.amount", Integer.valueOf(current + amount));
                 SettingsManager.saveData();
                 QManager.testComplete(player, quest);
             } else {
@@ -220,10 +220,9 @@ public class QListeners implements Listener {
         }
         if (QManager.hasQuest(player) && QManager.getObjectiveType(quest).equals("enchant") && (
                 QManager.getType(QManager.getQuestId(player)).split(";")[0].contains("any") || event.getItem().getType().equals(Material.valueOf(QManager.getType(QManager.getQuestId(player)).split(";")[0].toUpperCase()))) &&
-                event.getEnchantsToAdd().containsKey(Enchantment.getByName(QManager.getType(QManager.getQuestId(player)).split(";")[1].toUpperCase())) && (
-                (Integer) event.getEnchantsToAdd().get(Enchantment.getByName(QManager.getType(QManager.getQuestId(player)).split(";")[1].toUpperCase()))).equals(Integer.valueOf(Integer.parseInt(QManager.getType(QManager.getQuestId(player)).split(";")[2])))) {
-            int current = SettingsManager.getData().getInt(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount");
-            SettingsManager.getData().set(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount", Integer.valueOf(current + 1));
+                event.getEnchantsToAdd().containsKey(Enchantment.getByName(QManager.getType(QManager.getQuestId(player)).split(";")[1].toUpperCase())) && event.getEnchantsToAdd().get(Enchantment.getByName(QManager.getType(QManager.getQuestId(player)).split(";")[1].toUpperCase())).equals(Integer.valueOf(Integer.parseInt(QManager.getType(QManager.getQuestId(player)).split(";")[2])))) {
+            int current = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".selected-quest.amount");
+            SettingsManager.getData().set(player.getUniqueId().toString() + ".selected-quest.amount", Integer.valueOf(current + 1));
             SettingsManager.saveData();
             QManager.testComplete(player, quest);
         }
@@ -265,8 +264,8 @@ public class QListeners implements Listener {
             int z = Integer.parseInt(SettingsManager.getConfig().getString("quests." + quest + ".type").split(";")[3]);
             Location loc = new Location(Bukkit.getWorld(world), x, y, z);
             if (event.getClickedBlock().getLocation().equals(loc)) {
-                int current = SettingsManager.getData().getInt(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount");
-                SettingsManager.getData().set(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount", Integer.valueOf(current + 1));
+                int current = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".selected-quest.amount");
+                SettingsManager.getData().set(player.getUniqueId().toString() + ".selected-quest.amount", Integer.valueOf(current + 1));
                 SettingsManager.saveData();
                 QManager.testComplete(player, quest);
             }
@@ -274,7 +273,7 @@ public class QListeners implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void shearEvent (PlayerShearEntityEvent event){
+    public void shearEvent(PlayerShearEntityEvent event) {
         Player player = event.getPlayer();
         String quest = "";
         if (QManager.getQuest(player).equals("quest1")) {
@@ -286,39 +285,12 @@ public class QListeners implements Listener {
         }
         if (QManager.hasQuest(player) && QManager.getObjectiveType(quest).equals("shear") &&
                 event.getEntity().getType().equals(EntityType.valueOf(QManager.getType(QManager.getQuestId(player)).toUpperCase()))) {
-            int current = SettingsManager.getData().getInt(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount");
-            SettingsManager.getData().set(String.valueOf(player.getUniqueId().toString()) + ".selected-quest.amount", Integer.valueOf(current + 1));
+            int current = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".selected-quest.amount");
+            SettingsManager.getData().set(player.getUniqueId().toString() + ".selected-quest.amount", Integer.valueOf(current + 1));
             SettingsManager.saveData();
             QManager.testComplete(player, quest);
         }
     }
-
-    /*@EventHandler
-    public void onRegionEnter(RegionEnterEvent event) {
-        final Player player = event.getPlayer();
-        String quest = "";
-        if (QManager.getQuest(player).equals("quest1")) {
-            quest = QManager.getQuestOne(player);
-        } else if (QManager.getQuest(player).equals("quest2")) {
-            quest = QManager.getQuestTwo(player);
-        } else if (QManager.getQuest(player).equals("quest3")) {
-            quest = QManager.getQuestThree(player);
-        }
-        if (event.getRegion().getId().equalsIgnoreCase("pk1") || event.getRegion().getId().contains("qchallenge-"))
-            if ((!QManager.hasQuest(player) || !QManager.getObjectiveType(quest).equals("challenge")) && player.getGameMode().equals(GameMode.SURVIVAL)) {
-                (new BukkitRunnable() {
-                    public void run() {
-                        Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "spawn " + player.getName());
-                        Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "fly " + player.getName() + " off");
-                        player.sendMessage(ChatColor.RED + "You must have the correct quest selected to access this area.");
-                        player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_LAND, 1.0F, 1.0F);
-                    }
-                }).runTaskLater(Main.plugin, 5L);
-            } else {
-                player.playSound(player.getLocation(), Sound.UI_TOAST_IN, 10.0F, 1.0F);
-                player.sendMessage(ChatColor.GREEN + "Entering quest challenge, good luck!");
-            }
-    }*/
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(PlayerJoinEvent event) {
@@ -327,18 +299,10 @@ public class QListeners implements Listener {
             public void run() {
                 if (QManager.hasAvailable(player)) {
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 2.0F, 2.0F);
-                    player.sendMessage(org.bukkit.ChatColor.translateAlternateColorCodes('&', "&8(&6&l!&8) &6&lQuests: &eHey! I noticed you don't have a quest selected, you should go check out &6/warp quests &eand see if you have any quests available!"));
+                    player.sendMessage(org.bukkit.ChatColor.translateAlternateColorCodes('&', "&6Tasks: &eHey! I noticed you don't have a task selected, you should go check out &6/tasks &eand see if you have any tasks available!"));
                 }
             }
         }).runTaskLater(Main.plugin, 200L);
     }
-
-    /*@EventHandler
-    public void closeInvetory(InventoryCloseEvent event){
-        Player player = (Player) event.getPlayer();
-        if(QGui.guiOpened.get(player)!=null){
-            QGui.guiOpened.remove(player);
-        }
-    }*/
 }
 

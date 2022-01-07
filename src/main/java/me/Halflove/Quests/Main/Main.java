@@ -13,18 +13,24 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
-    public SettingsManager settings = SettingsManager.getInstance();
-
+    public static Plugin plugin;
     private static Economy econ = null;
 
     private static Permission perms = null;
+    public SettingsManager settings = SettingsManager.getInstance();
 
-    public static Plugin plugin;
+    public static Economy getEconomy() {
+        return econ;
+    }
+
+    public static Permission getPerms() {
+        return perms;
+    }
 
     public void onEnable() {
-        plugin = (Plugin)this;
+        plugin = this;
         getLogger().info("Version " + getDescription().getVersion() + " has been enabled.");
-        this.settings.setup((Plugin)this);
+        this.settings.setup(this);
         registerEvents();
         registerCommands();
         setupEconomy();
@@ -36,12 +42,12 @@ public class Main extends JavaPlugin {
     }
 
     private void registerEvents() {
-        Bukkit.getPluginManager().registerEvents((Listener)new QGui(), (Plugin)this);
-        Bukkit.getPluginManager().registerEvents((Listener)new QListeners(), (Plugin)this);
+        Bukkit.getPluginManager().registerEvents(new QGui(), this);
+        Bukkit.getPluginManager().registerEvents(new QListeners(), this);
     }
 
     public void registerCommands() {
-        getCommand("tasks").setExecutor((CommandExecutor)new QCommands());
+        getCommand("tasks").setExecutor(new QCommands());
     }
 
     private boolean setupEconomy() {
@@ -50,22 +56,14 @@ public class Main extends JavaPlugin {
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null)
             return false;
-        econ = (Economy)rsp.getProvider();
+        econ = rsp.getProvider();
         return (econ != null);
-    }
-
-    public static Economy getEconomy() {
-        return econ;
     }
 
     private boolean setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
-        perms = (Permission)rsp.getProvider();
+        perms = rsp.getProvider();
         return (perms != null);
-    }
-
-    public static Permission getPerms() {
-        return perms;
     }
 }
 
