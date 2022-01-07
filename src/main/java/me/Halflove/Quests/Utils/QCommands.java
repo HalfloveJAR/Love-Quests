@@ -51,8 +51,8 @@ public class QCommands implements CommandExecutor {
                 Player player = (Player) sender;
                 if (!player.getLocation().getWorld().getName().equalsIgnoreCase("world_spawn") && !player.hasPermission("level.unlocked.10")) {
                     player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1.0F, 1.0F);
-                    sender.sendMessage(org.bukkit.ChatColor.translateAlternateColorCodes('&', "&6Taskmaster: &fOops, you can only do &e/tasks progress&f in this world!"));
-                    sender.sendMessage(org.bukkit.ChatColor.translateAlternateColorCodes('&', "6Taskmaster: &fUnlock the remote menu at &elevel 10&f! (&e/levels&f)"));
+                    sender.sendMessage(org.bukkit.ChatColor.translateAlternateColorCodes('&', "&6Tasks: &fOops, you can only do &e/tasks progress&f in this world!"));
+                    sender.sendMessage(org.bukkit.ChatColor.translateAlternateColorCodes('&', "&6Tasks: &fUnlock the remote menu at &elevel 10&f! (&e/levels&f)"));
                 } else {
                     QGui.openGui(player);
                 }
@@ -63,8 +63,8 @@ public class QCommands implements CommandExecutor {
             } else {
                 Player player = (Player) sender;
                 player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1.0F, 1.0F);
-                sender.sendMessage(org.bukkit.ChatColor.translateAlternateColorCodes('&', "6Taskmaster: &fOops, you typed that wrong!"));
-                sender.sendMessage(org.bukkit.ChatColor.translateAlternateColorCodes('&', "6Taskmaster: &fTry /Tasks or /Tasks Progress"));
+                sender.sendMessage(org.bukkit.ChatColor.translateAlternateColorCodes('&', "&6Tasks: &fOops, you typed that wrong!"));
+                sender.sendMessage(org.bukkit.ChatColor.translateAlternateColorCodes('&', "&6Tasks: &fTry /Tasks or /Tasks Progress"));
             }
         return true;
     }

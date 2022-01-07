@@ -106,7 +106,7 @@ public class QManager {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Tasks: &f" + "" + (int) current + "/" + (int) end + " (" + format.format(progress) + "% Complete)"));
         } else {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Tasks: &fYou are not currently doing a task"));
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Tasks: &fSelect a quest at &e/tasks&f!"));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Tasks: &fSelect a task at &e/tasks&f!"));
             player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1.0F, 1.0F);
         }
     }

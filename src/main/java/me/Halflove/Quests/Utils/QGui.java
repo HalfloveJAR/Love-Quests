@@ -17,12 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QGui implements Listener {
+
     public static DecimalFormat format = new DecimalFormat("#.##");
-    //public static HashMap<Player, Boolean> guiOpened = new HashMap<Player, Boolean>();
 
     public static void openGui(Player player) {
-        Inventory gui = Bukkit.createInventory(null, 27, ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Quests");
-        //guiOpened.put(player, true);
+        Inventory gui = Bukkit.createInventory(null, 27, ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "Task Master");
         if (!QManager.getQuestList().contains(QManager.getQuestOne(player)))
             QManager.assignQuest(player, "1");
         if (SettingsManager.getData().getString(player.getUniqueId().toString() + ".quest1.id") == null &&
@@ -217,7 +216,7 @@ public class QGui implements Listener {
                 quest2meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4Task 2 &c&lUnavailable"));
                 List<String> lore2 = SettingsManager.getConfig().getStringList("quests." + id2);
                 lore2.add(ChatColor.translateAlternateColorCodes('&', "&8&l&m---------------"));
-                lore2.add(ChatColor.translateAlternateColorCodes('&', "&c&lYou already have a quest"));
+                lore2.add(ChatColor.translateAlternateColorCodes('&', "&c&lYou already have a task"));
                 lore2.add("");
                 lore2.add(ChatColor.translateAlternateColorCodes('&', "&6&l" + QManager.getName(QManager.getQuestTwo(player))));
                 lore2.add("");
@@ -282,7 +281,7 @@ public class QGui implements Listener {
                 lore3.add(ChatColor.translateAlternateColorCodes('&', "&8&l&m---------------"));
                 lore3.add(ChatColor.translateAlternateColorCodes('&', "&c&lUnder cooldown"));
                 lore3.add("");
-                lore3.add(ChatColor.translateAlternateColorCodes('&', "&e» &7" + "This quest is currently under cooldown"));
+                lore3.add(ChatColor.translateAlternateColorCodes('&', "&e» &7" + "This task is currently under cooldown"));
                 lore3.add(ChatColor.translateAlternateColorCodes('&', "&e» &7" + SettingsManager.formatTime(difference) + " until reset"));
                 lore3.add("");
                 if (QManager.isDonor(player)) {
@@ -340,7 +339,7 @@ public class QGui implements Listener {
                 quest3meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4Task 3 &c&lUnavailable"));
                 List<String> lore3 = SettingsManager.getConfig().getStringList("quests." + id3);
                 lore3.add(ChatColor.translateAlternateColorCodes('&', "&8&l&m---------------"));
-                lore3.add(ChatColor.translateAlternateColorCodes('&', "&c&lYou already have a quest"));
+                lore3.add(ChatColor.translateAlternateColorCodes('&', "&c&lYou already have a task"));
                 lore3.add("");
                 lore3.add(ChatColor.translateAlternateColorCodes('&', "&6&l" + QManager.getName(QManager.getQuestThree(player))));
                 lore3.add("");
@@ -385,7 +384,7 @@ public class QGui implements Listener {
             lore3.add(ChatColor.translateAlternateColorCodes('&', "&8&l&m---------------"));
             lore3.add(ChatColor.translateAlternateColorCodes('&', "&c&lYou haven't unlocked this yet"));
             lore3.add("");
-            lore3.add(ChatColor.translateAlternateColorCodes('&', "&e» &7Unlock this quest slot at Level 15"));
+            lore3.add(ChatColor.translateAlternateColorCodes('&', "&e» &7Unlock this task slot at Level 15"));
             lore3.add(ChatColor.translateAlternateColorCodes('&', "&e» &7Progress through the levels with /levels"));
             lore3.add("");
             lore3.add(ChatColor.translateAlternateColorCodes('&', "&8&l&m---------------"));
@@ -414,11 +413,11 @@ public class QGui implements Listener {
         int completed = SettingsManager.getData().getInt(player.getUniqueId().toString() + ".quests-completed");
         SkullMeta statsmeta = (SkullMeta) stats.getItemMeta();
         statsmeta.setOwner(player.getName());
-        statsmeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lQuests Completed"));
+        statsmeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&Tasks Completed"));
         ArrayList<String> statslore = new ArrayList<>();
         statslore.add(ChatColor.translateAlternateColorCodes('&', "&8&l&m---------------"));
         statslore.add("");
-        statslore.add(ChatColor.translateAlternateColorCodes('&', "&e» &7You have completed &e" + completed + "&7 quests"));
+        statslore.add(ChatColor.translateAlternateColorCodes('&', "&e» &7You have completed &e" + completed + "&7 task(s)"));
         statslore.add("");
         statslore.add(ChatColor.translateAlternateColorCodes('&', "&8&l&m---------------"));
         statsmeta.setLore(statslore);
